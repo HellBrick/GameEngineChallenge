@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
+using GameEngineChallenge.Actions;
 using GameEngineChallenge.Services;
 using Utils;
 using Xunit;
@@ -30,6 +31,28 @@ namespace GameEngineChallenge.Test
 			executionOrder.Should().HaveElementAt( 2, phase4 );
 
 			IActiveAbility CreatePhaseAbility( TickPhase phase ) => CreateActiveAbility( phase, ( h, c ) => executionOrder.Add( phase ) );
+		}
+
+		[Theory]
+		[InlineData( 1, 0, false )]
+		[InlineData( 0, 0, false )]
+		[InlineData( 0, 1, true )]
+		[InlineData( 0, 13, true )]
+		public void AbilityAddedIntoCurrentPhaseIsNotExecuted( uint inflicterPhase, uint newAbilityPhase, bool shouldExecuteNewAbility )
+		{
+			bool newAbilityExecuted = false;
+
+			IActiveAbility newAbility = CreateActiveAbility( new TickPhase( newAbilityPhase ), ( h, c ) => newAbilityExecuted = true );
+			IActiveAbility newAbilityInflicter = CreateActiveAbility( new TickPhase( inflicterPhase ), ( h, c ) => new AddRequisiteAction( h, newAbility ) );
+
+			Hero hero = new Hero( newAbilityInflicter );
+			HeroService heroService = new HeroService( hero.AsArray() );
+			GameContext context = new GameContext( heroService );
+
+			TickExecutor executor = new TickExecutor();
+			executor.ExecuteTick( context );
+
+			newAbilityExecuted.Should().Be( shouldExecuteNewAbility );
 		}
 	}
 }
