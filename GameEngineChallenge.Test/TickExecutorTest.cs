@@ -54,5 +54,23 @@ namespace GameEngineChallenge.Test
 
 			newAbilityExecuted.Should().Be( shouldExecuteNewAbility );
 		}
+
+		[Fact]
+		public void RemovedAbilityIsNotExecuted()
+		{
+			bool removedAbilityExecuted = false;
+
+			IActiveAbility removedAbility = CreateActiveAbility( new TickPhase( 1 ), ( h, c ) => removedAbilityExecuted = true );
+			IActiveAbility abilityRemover = CreateActiveAbility( new TickPhase( 0 ), ( h, c ) => new RemoveRequisiteAction( h, removedAbility ) );
+
+			Hero hero = new Hero( removedAbility, abilityRemover );
+			HeroService heroService = new HeroService( hero.AsArray() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+
+			TickExecutor executor = new TickExecutor();
+			executor.ExecuteTick( context );
+
+			removedAbilityExecuted.Should().Be( false );
+		}
 	}
 }
