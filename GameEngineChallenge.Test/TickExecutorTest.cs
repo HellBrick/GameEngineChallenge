@@ -21,7 +21,7 @@ namespace GameEngineChallenge.Test
 
 			Hero hero = new Hero( new IRequisite[] { CreatePhaseAbility( phase1 ), CreatePhaseAbility( phase4 ), CreatePhaseAbility( phase0 ) } );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
 
 			TickExecutor executor = new TickExecutor();
 			executor.ExecuteTick( context );
@@ -47,7 +47,7 @@ namespace GameEngineChallenge.Test
 
 			Hero hero = new Hero( newAbilityInflicter );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
 
 			TickExecutor executor = new TickExecutor();
 			executor.ExecuteTick( context );

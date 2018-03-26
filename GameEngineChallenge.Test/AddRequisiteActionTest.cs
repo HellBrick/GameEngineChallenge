@@ -14,7 +14,7 @@ namespace GameEngineChallenge.Test
 			BoringRequisite requisite = new BoringRequisite();
 			Hero hero = new Hero( requisite );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
 
 			new AddRequisiteAction( hero, requisite ).Execute( context );
 
