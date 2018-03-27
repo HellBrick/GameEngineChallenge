@@ -12,7 +12,7 @@ namespace GameEngineChallenge.Test
 		public void RequisitesWithTheSameIdDontStack()
 		{
 			BoringRequisite requisite = new BoringRequisite();
-			Hero hero = new Hero( requisite );
+			Hero hero = new Hero( team: default, requisite );
 			HeroService heroService = new HeroService( hero.AsArray() );
 			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
 

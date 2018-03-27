@@ -5,8 +5,9 @@ namespace GameEngineChallenge
 {
 	public class Hero
 	{
-		public Hero( params IRequisite[] initialRequisites )
+		public Hero( TeamId team, params IRequisite[] initialRequisites )
 		{
+			Team = team;
 			Requisites = new HashSet<IRequisite>
 			(
 				initialRequisites,
@@ -14,6 +15,7 @@ namespace GameEngineChallenge
 			);
 		}
 
+		public TeamId Team { get; }
 		public ICollection<IRequisite> Requisites { get; }
 	}
 }

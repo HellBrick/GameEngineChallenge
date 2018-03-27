@@ -20,7 +20,7 @@ namespace GameEngineChallenge.Test
 		[InlineData( 6.0, 1.0, 3.0, 4.0, 3.6, 4.8 )]
 		public void MovementMathChecksOut( double speed, double time, double inputX, double inputY, double positionX, double positionY )
 		{
-			Hero hero = new Hero( new InputBasedMovementAbility( new Speed( speed ) ) );
+			Hero hero = new Hero( team: default, new InputBasedMovementAbility( new Speed( speed ) ) );
 			HeroService heroService = new HeroService( hero.AsArray() );
 			SpaceService spaceService = new SpaceService();
 			InputService inputService = new InputService();

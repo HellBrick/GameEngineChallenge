@@ -19,7 +19,7 @@ namespace GameEngineChallenge.Test
 			TickPhase phase1 = new TickPhase( 1 );
 			TickPhase phase4 = new TickPhase( 4 );
 
-			Hero hero = new Hero( new IRequisite[] { CreatePhaseAbility( phase1 ), CreatePhaseAbility( phase4 ), CreatePhaseAbility( phase0 ) } );
+			Hero hero = new Hero( team: default, new IRequisite[] { CreatePhaseAbility( phase1 ), CreatePhaseAbility( phase4 ), CreatePhaseAbility( phase0 ) } );
 			HeroService heroService = new HeroService( hero.AsArray() );
 			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
 
@@ -45,7 +45,7 @@ namespace GameEngineChallenge.Test
 			IActiveAbility newAbility = CreateActiveAbility( new TickPhase( newAbilityPhase ), ( h, c ) => newAbilityExecuted = true );
 			IActiveAbility newAbilityInflicter = CreateActiveAbility( new TickPhase( inflicterPhase ), ( h, c ) => new AddRequisiteAction( h, newAbility ) );
 
-			Hero hero = new Hero( newAbilityInflicter );
+			Hero hero = new Hero( team: default, newAbilityInflicter );
 			HeroService heroService = new HeroService( hero.AsArray() );
 			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
 
@@ -63,7 +63,7 @@ namespace GameEngineChallenge.Test
 			IActiveAbility removedAbility = CreateActiveAbility( new TickPhase( 1 ), ( h, c ) => removedAbilityExecuted = true );
 			IActiveAbility abilityRemover = CreateActiveAbility( new TickPhase( 0 ), ( h, c ) => new RemoveRequisiteAction( h, removedAbility ) );
 
-			Hero hero = new Hero( removedAbility, abilityRemover );
+			Hero hero = new Hero( team: default, removedAbility, abilityRemover );
 			HeroService heroService = new HeroService( hero.AsArray() );
 			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
 
