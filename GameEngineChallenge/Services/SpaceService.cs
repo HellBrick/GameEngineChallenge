@@ -7,6 +7,7 @@ namespace GameEngineChallenge.Services
 	public interface ISpaceService
 	{
 		void MoveHero( Hero hero, Vector moveVector );
+		Position GetHeroPosition( Hero hero );
 	}
 
 	public class SpaceService : ISpaceService
