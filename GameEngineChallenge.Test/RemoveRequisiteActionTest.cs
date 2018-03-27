@@ -12,7 +12,7 @@ namespace GameEngineChallenge.Test
 		public void RemovingNonExistingRequisiteIsNoop()
 		{
 			ExistingRequisite existingRequisite = new ExistingRequisite();
-			Hero hero = new Hero( team: default, existingRequisite );
+			Hero hero = new Hero( team: default, initialHp: default, existingRequisite );
 			HeroService heroService = new HeroService( hero.AsArray() );
 			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
 
@@ -26,7 +26,7 @@ namespace GameEngineChallenge.Test
 		public void RemovingExistingRequisiteWorks()
 		{
 			ExistingRequisite existingRequisite = new ExistingRequisite();
-			Hero hero = new Hero( team: default, existingRequisite );
+			Hero hero = new Hero( team: default, initialHp: default, existingRequisite );
 			HeroService heroService = new HeroService( hero.AsArray() );
 			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
 
