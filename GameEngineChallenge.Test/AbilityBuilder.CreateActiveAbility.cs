@@ -10,7 +10,7 @@ namespace GameEngineChallenge.Test
 			=> CreateActiveAbility
 			(
 				phase,
-				( hero, context ) => new LambdaAction( hero, actionLambda )
+				( hero, context ) => CreateAction( hero, actionLambda )
 			);
 
 		public static IActiveAbility CreateActiveAbility( TickPhase phase, Func<Hero, GameContext, IAction> actionFactory )
