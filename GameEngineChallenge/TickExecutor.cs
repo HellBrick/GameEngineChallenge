@@ -34,8 +34,8 @@ namespace GameEngineChallenge
 				IEnumerable<IAction> EnumeratePhaseActions()
 					=> heroes
 					.SelectMany( hero => hero.Requisites.OfType<IActiveAbility>(), ( hero, ability ) => (hero, ability) )
-					.Where( pair => pair.ability.Phase == currentPhase )
-					.SelectMany( pair => pair.ability.GetActions( pair.hero, context ) );
+					.Where( heroAbility => heroAbility.ability.Phase == currentPhase )
+					.SelectMany( heroAbility => heroAbility.ability.GetActions( heroAbility.hero, context ) );
 			}
 		}
 	}
