@@ -4,15 +4,15 @@ namespace GameEngineChallenge.Actions
 {
 	public class MoveAction : IAction
 	{
-		private readonly Hero _hero;
-		private readonly Vector _moveVector;
+		public Hero Hero { get; }
+		public Vector MoveVector { get; }
 
 		public MoveAction( Hero hero, Vector moveVector )
 		{
-			_hero = hero;
-			_moveVector = moveVector;
+			Hero = hero;
+			MoveVector = moveVector;
 		}
 
-		public void Execute( GameContext context ) => context.SpaceService.MoveHero( _hero, _moveVector );
+		public void Execute( GameContext context ) => context.SpaceService.MoveHero( Hero, MoveVector );
 	}
 }
