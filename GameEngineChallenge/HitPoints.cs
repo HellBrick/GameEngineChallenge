@@ -5,6 +5,8 @@ namespace GameEngineChallenge
 {
 	public readonly struct HitPoints : IEquatable<HitPoints>, IComparable<HitPoints>
 	{
+		public static HitPoints Zero { get; } = new HitPoints( 0 );
+
 		public HitPoints( uint value ) => Value = value;
 
 		public uint Value { get; }
