@@ -35,7 +35,18 @@ namespace GameEngineChallenge
 					=> heroes
 					.SelectMany( hero => hero.Requisites.OfType<IActiveAbility>(), ( hero, ability ) => (hero, ability) )
 					.Where( heroAbility => heroAbility.ability.Phase == currentPhase )
-					.SelectMany( heroAbility => heroAbility.ability.GetActions( heroAbility.hero, context ) );
+					.SelectMany( heroAbility => heroAbility.ability.GetActions( heroAbility.hero, context ), ( heroAbility, action ) => (heroAbility.hero, action) )
+					.SelectMany( heroAction => ApplyInterceptors( heroAction.action, heroAction.hero ) );
+
+				IEnumerable<IAction> ApplyInterceptors( IAction action, Hero actionExecutor )
+					=> actionExecutor
+					.Requisites
+					.OfType<IActionInterceptor>()
+					.Aggregate
+					(
+						action.AsArray() as IEnumerable<IAction>,
+						( actions, interceptor ) => actions.SelectMany( a => interceptor.Intercept( a ) )
+					);
 			}
 		}
 	}
