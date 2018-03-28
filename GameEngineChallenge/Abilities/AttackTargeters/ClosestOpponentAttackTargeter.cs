@@ -16,7 +16,7 @@ namespace GameEngineChallenge.Abilities.AttackTargeters
 
 			return
 				context.HeroService.Heroes
-				.Where( hero => hero.Team != attacker.Team && hero.HP > new HitPoints( 0 ) )
+				.Where( hero => hero.Team != attacker.Team && hero.HP > HitPoints.Zero )
 				.Select( hero => (Hero: hero, Distance: Distance.Between( attackerPosition, context.SpaceService.GetHeroPosition( hero ) )) )
 				.Where( pair => pair.Distance <= _radius )
 				.OrderBy( pair => pair.Distance )
