@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using GameEngineChallenge.Actions;
 using GameEngineChallenge.Services;
@@ -71,6 +73,90 @@ namespace GameEngineChallenge.Test
 			executor.ExecuteTick( context );
 
 			removedAbilityExecuted.Should().Be( false );
+		}
+
+		[Fact]
+		public void InterceptorCanDisableAction()
+		{
+			bool actionExecuted = false;
+
+			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => actionExecuted = true );
+			IActionInterceptor interceptor = CreateInterceptor( a => Array.Empty<IAction>() );
+
+			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
+			HeroService heroService = new HeroService( hero.AsArray() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+
+			TickExecutor executor = new TickExecutor();
+			executor.ExecuteTick( context );
+
+			actionExecuted.Should().Be( false );
+		}
+
+		[Fact]
+		public void InterceptorCanPassActionThrough()
+		{
+			bool actionExecuted = false;
+
+			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => actionExecuted = true );
+			IActionInterceptor interceptor = CreateInterceptor( a => a.AsArray() );
+
+			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
+			HeroService heroService = new HeroService( hero.AsArray() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+
+			TickExecutor executor = new TickExecutor();
+			executor.ExecuteTick( context );
+
+			actionExecuted.Should().Be( true );
+		}
+
+		[Fact]
+		public void InterceptorCanReplaceAction()
+		{
+			bool originalActionExecuted = false;
+			bool replacementActionExecuted = false;
+
+			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => originalActionExecuted = true );
+			IActionInterceptor interceptor = CreateInterceptor( a => CreateAction( c => replacementActionExecuted = true ).AsArray() );
+
+			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
+			HeroService heroService = new HeroService( hero.AsArray() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+
+			TickExecutor executor = new TickExecutor();
+			executor.ExecuteTick( context );
+
+			originalActionExecuted.Should().Be( false );
+			replacementActionExecuted.Should().Be( true );
+		}
+
+		[Fact]
+		public void InterceptorCanAddMultipleActions()
+		{
+			const int additionalActionsToCreate = 5;
+
+			bool originalActionExecuted = false;
+			int additionalActionsExecuted = 0;
+
+			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => originalActionExecuted = true );
+			IActionInterceptor interceptor = CreateInterceptor
+			(
+				a
+				=> Enumerable
+				.Repeat( CreateAction( c => additionalActionsExecuted++ ), additionalActionsToCreate )
+				.Concat( a.AsArray() )
+			);
+
+			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
+			HeroService heroService = new HeroService( hero.AsArray() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+
+			TickExecutor executor = new TickExecutor();
+			executor.ExecuteTick( context );
+
+			originalActionExecuted.Should().Be( true );
+			additionalActionsExecuted.Should().Be( additionalActionsToCreate );
 		}
 	}
 }

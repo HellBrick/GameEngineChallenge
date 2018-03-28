@@ -26,12 +26,28 @@ namespace GameEngineChallenge
 				.MinOrNull();
 
 			void ExecutePhase( TickPhase currentPhase )
-				=> heroes
-				.SelectMany( hero => hero.Requisites.OfType<IActiveAbility>(), ( hero, ability ) => (hero, ability) )
-				.Where( pair => pair.ability.Phase == currentPhase )
-				.SelectMany( pair => pair.ability.GetActions( pair.hero, context ) )
-				.ToArray()
-				.ForEach( context, ( capturedContext, action ) => action.Execute( capturedContext ) );
+			{
+				EnumeratePhaseActions()
+					.ToArray()
+					.ForEach( context, ( capturedContext, action ) => action.Execute( capturedContext ) );
+
+				IEnumerable<IAction> EnumeratePhaseActions()
+					=> heroes
+					.SelectMany( hero => hero.Requisites.OfType<IActiveAbility>(), ( hero, ability ) => (hero, ability) )
+					.Where( heroAbility => heroAbility.ability.Phase == currentPhase )
+					.SelectMany( heroAbility => heroAbility.ability.GetActions( heroAbility.hero, context ), ( heroAbility, action ) => (heroAbility.hero, action) )
+					.SelectMany( heroAction => ApplyInterceptors( heroAction.action, heroAction.hero ) );
+
+				IEnumerable<IAction> ApplyInterceptors( IAction action, Hero actionExecutor )
+					=> actionExecutor
+					.Requisites
+					.OfType<IActionInterceptor>()
+					.Aggregate
+					(
+						action.AsArray() as IEnumerable<IAction>,
+						( actions, interceptor ) => actions.SelectMany( a => interceptor.Intercept( a ) )
+					);
+			}
 		}
 	}
 }
