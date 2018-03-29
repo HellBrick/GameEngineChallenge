@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using GameEngineChallenge.Abilities;
 using GameEngineChallenge.Services;
 using Xunit;
@@ -19,7 +20,7 @@ namespace GameEngineChallenge.Test
 			AuraAbility auraAbility = new AuraAbility( inflictedAbility, CreateTargeter( ( h, c ) => auraTarget ) );
 			Hero auraProvider = new Hero( team: default, initialHp: default, auraAbility );
 
-			GameContext context = new GameContext( new HeroService( new[] { auraTarget, auraProvider } ), new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( new HeroService( new[] { auraTarget, auraProvider } ), new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			new TickExecutor().ExecuteTick( context );
 
@@ -38,7 +39,7 @@ namespace GameEngineChallenge.Test
 			AuraAbility auraAbility = new AuraAbility( inflictedAbility, CreateTargeter( ( h, c ) => auraTarget ) );
 			Hero auraProvider = new Hero( team: default, initialHp: default, auraAbility );
 
-			GameContext context = new GameContext( new HeroService( new[] { auraTarget, auraProvider } ), new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( new HeroService( new[] { auraTarget, auraProvider } ), new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 			new TickExecutor().ExecuteTick( context );
 
 			inflictedAbilityExecuted.Should().BeTrue();
