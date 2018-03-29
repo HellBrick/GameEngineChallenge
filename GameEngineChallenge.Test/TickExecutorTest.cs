@@ -81,7 +81,7 @@ namespace GameEngineChallenge.Test
 			bool actionExecuted = false;
 
 			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => actionExecuted = true );
-			IActionInterceptor interceptor = CreateInterceptor( a => Array.Empty<IAction>() );
+			IActionInterceptor interceptor = CreateInterceptor( ( a, c ) => Array.Empty<IAction>() );
 
 			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
 			HeroService heroService = new HeroService( hero.AsArray() );
@@ -99,7 +99,7 @@ namespace GameEngineChallenge.Test
 			bool actionExecuted = false;
 
 			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => actionExecuted = true );
-			IActionInterceptor interceptor = CreateInterceptor( a => a.AsArray() );
+			IActionInterceptor interceptor = CreateInterceptor( ( a, c ) => a.AsArray() );
 
 			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
 			HeroService heroService = new HeroService( hero.AsArray() );
@@ -118,7 +118,7 @@ namespace GameEngineChallenge.Test
 			bool replacementActionExecuted = false;
 
 			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => originalActionExecuted = true );
-			IActionInterceptor interceptor = CreateInterceptor( a => CreateAction( c => replacementActionExecuted = true ).AsArray() );
+			IActionInterceptor interceptor = CreateInterceptor( ( a, _ ) => CreateAction( c => replacementActionExecuted = true ).AsArray() );
 
 			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
 			HeroService heroService = new HeroService( hero.AsArray() );
@@ -142,7 +142,7 @@ namespace GameEngineChallenge.Test
 			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => originalActionExecuted = true );
 			IActionInterceptor interceptor = CreateInterceptor
 			(
-				a
+				( a, _ )
 				=> Enumerable
 				.Repeat( CreateAction( c => additionalActionsExecuted++ ), additionalActionsToCreate )
 				.Concat( a.AsArray() )

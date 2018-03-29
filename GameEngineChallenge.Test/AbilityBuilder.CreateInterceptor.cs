@@ -5,21 +5,21 @@ namespace GameEngineChallenge.Test
 {
 	public static partial class AbilityBuilder
 	{
-		public static IActionInterceptor CreateInterceptor( Func<IAction, IEnumerable<IAction>> interceptor )
+		public static IActionInterceptor CreateInterceptor( Func<IAction, GameContext, IEnumerable<IAction>> interceptor )
 			=> new LambdaInterceptor( interceptor );
 
 		private class LambdaInterceptor : IActionInterceptor
 		{
-			public LambdaInterceptor( Func<IAction, IEnumerable<IAction>> interceptor )
+			public LambdaInterceptor( Func<IAction, GameContext, IEnumerable<IAction>> interceptor )
 			{
 				_interceptor = interceptor;
 				Id = new RequisiteId( Guid.NewGuid().ToString() );
 			}
 
-			private readonly Func<IAction, IEnumerable<IAction>> _interceptor;
+			private readonly Func<IAction, GameContext, IEnumerable<IAction>> _interceptor;
 			public RequisiteId Id { get; }
 
-			public IEnumerable<IAction> Intercept( IAction action ) => _interceptor( action );
+			public IEnumerable<IAction> Intercept( IAction action, GameContext context ) => _interceptor( action, context );
 		}
 	}
 }

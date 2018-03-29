@@ -8,6 +8,6 @@ namespace GameEngineChallenge.Abilities
 		public static DeadAbility Instance { get; } = new DeadAbility();
 
 		public RequisiteId Id => new RequisiteId( nameof( DeadAbility ) );
-		public IEnumerable<IAction> Intercept( IAction action ) => Enumerable.Empty<IAction>();
+		public IEnumerable<IAction> Intercept( IAction action, GameContext context ) => Enumerable.Empty<IAction>();
 	}
 }

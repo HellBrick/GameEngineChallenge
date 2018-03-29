@@ -45,7 +45,7 @@ namespace GameEngineChallenge
 					.Aggregate
 					(
 						action.AsArray() as IEnumerable<IAction>,
-						( actions, interceptor ) => actions.SelectMany( a => interceptor.Intercept( a ) )
+						( actions, interceptor ) => actions.SelectMany( a => interceptor.Intercept( a, context ) )
 					);
 			}
 		}

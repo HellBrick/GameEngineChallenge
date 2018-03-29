@@ -4,6 +4,6 @@ namespace GameEngineChallenge
 {
 	public interface IActionInterceptor : IRequisite
 	{
-		IEnumerable<IAction> Intercept( IAction action );
+		IEnumerable<IAction> Intercept( IAction action, GameContext context );
 	}
 }
