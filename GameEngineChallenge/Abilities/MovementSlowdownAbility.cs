@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GameEngineChallenge.Actions;
 using Utils;
 
@@ -14,9 +13,9 @@ namespace GameEngineChallenge.Abilities
 
 		public RequisiteId Id => new RequisiteId( nameof( MovementSlowdownAbility ) );
 
-		public IEnumerable<IAction> Intercept( IAction action, GameContext context )
+		public OneOrMany<IAction> Intercept( IAction action, GameContext context )
 			=> action is MoveAction moveAction
-			? new MoveAction( moveAction.Hero, moveAction.MoveVector * _multiplier ).AsArray()
-			: action.AsArray();
+			? new MoveAction( moveAction.Hero, moveAction.MoveVector * _multiplier ).AsOne<IAction>()
+			: action.AsOne();
 	}
 }

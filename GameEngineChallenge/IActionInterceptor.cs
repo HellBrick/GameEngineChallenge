@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Utils;
 
 namespace GameEngineChallenge
 {
 	public interface IActionInterceptor : IRequisite
 	{
-		IEnumerable<IAction> Intercept( IAction action, GameContext context );
+		OneOrMany<IAction> Intercept( IAction action, GameContext context );
 	}
 }
