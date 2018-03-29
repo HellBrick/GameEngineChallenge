@@ -32,7 +32,7 @@ namespace GameEngineChallenge.Test
 		public void StatusIsInflictedIfTargetDoesNotHaveItAndThenDisappearsWhenTimeRunsOut()
 		{
 			IRequisite slowedDown = new MovementSlowdownAbility( 0.5 );
-			Hero target = new Hero( new TeamId( 0 ), new HitPoints( 9999 ), new DecreaseAllTimersAbility() );
+			Hero target = new Hero( new TeamId( 0 ), new HitPoints( 9999 ), DecreaseAllTimersAbility.Instance );
 
 			IRequisite attack
 				= new AutoAttackAbility( new HitPoints( 10 ), CreateTargeter( ( h, c ) => target ) )
