@@ -44,9 +44,10 @@ namespace GameEngineChallenge
 					.OfType<IActionInterceptor>()
 					.Aggregate
 					(
-						action.AsArray() as IEnumerable<IAction>,
+						action.AsOne(),
 						( actions, interceptor ) => actions.SelectMany( a => interceptor.Intercept( a, context ) )
-					);
+					)
+					.ToEnumerable();
 			}
 		}
 	}

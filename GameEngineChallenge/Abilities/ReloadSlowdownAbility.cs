@@ -13,12 +13,12 @@ namespace GameEngineChallenge.Abilities
 		private readonly double _multiplier;
 		public RequisiteId Id => new RequisiteId( nameof( ReloadSlowdownAbility ) );
 
-		public IEnumerable<IAction> Intercept( IAction action, GameContext context )
+		public OneOrMany<IAction> Intercept( IAction action, GameContext context )
 		{
 			return
 				action is DecreaseTimerAction timerAction && IsAutoAttackCooldownTimer( timerAction.Timer )
-				? new DecreaseTimerAction( timerAction.Timer, GetAdjustedDecrement() ).AsArray()
-				: action.AsArray();
+				? new DecreaseTimerAction( timerAction.Timer, GetAdjustedDecrement() ).AsOne<IAction>()
+				: action.AsOne();
 
 			bool IsAutoAttackCooldownTimer( ITimer timer )
 				=> timer is CooldownAbility cooldownAbility

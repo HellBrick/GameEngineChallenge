@@ -18,14 +18,14 @@ namespace GameEngineChallenge.Abilities
 
 		public RequisiteId Id => new RequisiteId( nameof( CriticalHitChanceAbility ) );
 
-		public IEnumerable<IAction> Intercept( IAction action, GameContext context )
+		public OneOrMany<IAction> Intercept( IAction action, GameContext context )
 		{
 			IAction result
 				= action is DamageAction damageAction && context.RandomService.NextDouble() < _chance
 				? new DamageAction( damageAction.Target, new HitPoints( (uint) ( Math.Round( damageAction.Damage.Value * _damageMultiplier ) ) ) )
 				: action;
 
-			return result.AsArray();
+			return result.AsOne();
 		}
 	}
 }

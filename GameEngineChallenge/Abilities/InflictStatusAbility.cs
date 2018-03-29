@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GameEngineChallenge.Actions;
 using Utils;
 
@@ -18,20 +17,21 @@ namespace GameEngineChallenge.Abilities
 		private readonly TimeSpan _duration;
 		public RequisiteId Id { get; }
 
-		public IEnumerable<IAction> Intercept( IAction action, GameContext context )
+		public OneOrMany<IAction> Intercept( IAction action, GameContext context )
 		{
 			return
 				action is DamageAction damageAction && !damageAction.Target.Requisites.Contains( _status )
 				? AppendStatusAndRemover()
-				: action.AsArray();
+				: action.AsOne();
 
-			IAction[] AppendStatusAndRemover()
+			OneOrMany<IAction> AppendStatusAndRemover()
 				=> new IAction[]
 				{
 					action,
 					new AddRequisiteAction( damageAction.Target, _status ),
 					new AddRequisiteAction( damageAction.Target, new RemoveRequisiteAbility( _status, CommonTickPhases.PassiveAbilities ).Schedule( _duration ) )
-				};
+				}
+				.AsMany();
 		}
 	}
 }
