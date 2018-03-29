@@ -7,14 +7,14 @@ using Xunit;
 
 namespace GameEngineChallenge.Test
 {
-	public class ClosestOpponentAttackTargeterTest
+	public class ClosestOpponentTargeterTest
 	{
 		private static readonly HitPoints _initialHp = new HitPoints( 50 );
 
 		[Fact]
 		public void CanNotTargetFarAwayOpponent()
 		{
-			ClosestOpponentAttackTargeter targeter = new ClosestOpponentAttackTargeter( new Distance( 1.0 ) );
+			ClosestOpponentTargeter targeter = new ClosestOpponentTargeter( new Distance( 1.0 ) );
 
 			Hero attacker = new Hero( new TeamId( 0 ), _initialHp );
 			Hero opponent = new Hero( new TeamId( 1 ), _initialHp );
@@ -34,7 +34,7 @@ namespace GameEngineChallenge.Test
 		[Fact]
 		public void CanNotTargetTeammate()
 		{
-			ClosestOpponentAttackTargeter targeter = new ClosestOpponentAttackTargeter( new Distance( 1.0 ) );
+			ClosestOpponentTargeter targeter = new ClosestOpponentTargeter( new Distance( 1.0 ) );
 
 			Hero attacker = new Hero( new TeamId( 0 ), _initialHp );
 			Hero teammate = new Hero( new TeamId( 0 ), _initialHp );
@@ -54,7 +54,7 @@ namespace GameEngineChallenge.Test
 		[Fact]
 		public void CanNotTargetOpponentWithNoHpLeft()
 		{
-			ClosestOpponentAttackTargeter targeter = new ClosestOpponentAttackTargeter( new Distance( 1.0 ) );
+			ClosestOpponentTargeter targeter = new ClosestOpponentTargeter( new Distance( 1.0 ) );
 
 			Hero attacker = new Hero( new TeamId( 0 ), _initialHp );
 			Hero deadOpponent = new Hero( new TeamId( 1 ), new HitPoints( 0 ) );
@@ -74,7 +74,7 @@ namespace GameEngineChallenge.Test
 		[Fact]
 		public void ChoosesCorrectTarget()
 		{
-			ClosestOpponentAttackTargeter targeter = new ClosestOpponentAttackTargeter( new Distance( 1.0 ) );
+			ClosestOpponentTargeter targeter = new ClosestOpponentTargeter( new Distance( 1.0 ) );
 
 			Hero attacker = new Hero( new TeamId( 0 ), _initialHp );
 			Hero teammate = new Hero( new TeamId( 0 ), _initialHp );

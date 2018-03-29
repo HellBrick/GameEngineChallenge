@@ -6,14 +6,14 @@ namespace GameEngineChallenge.Abilities
 {
 	public class AutoAttackAbility : IActiveAbility
 	{
-		public AutoAttackAbility( HitPoints damage, IAttackTargeter targeter )
+		public AutoAttackAbility( HitPoints damage, ITargeter targeter )
 		{
 			_damage = damage;
 			_targeter = targeter;
 		}
 
 		private readonly HitPoints _damage;
-		private readonly IAttackTargeter _targeter;
+		private readonly ITargeter _targeter;
 
 		public TickPhase Phase => CommonTickPhases.OffensiveAbilities;
 		public RequisiteId Id => new RequisiteId( nameof( AutoAttackAbility ) );

@@ -4,9 +4,9 @@ using Utils.SpaceTime;
 
 namespace GameEngineChallenge.Abilities.AttackTargeters
 {
-	public class ClosestOpponentAttackTargeter : IAttackTargeter
+	public class ClosestOpponentTargeter : ITargeter
 	{
-		public ClosestOpponentAttackTargeter( Distance radius ) => _radius = radius;
+		public ClosestOpponentTargeter( Distance radius ) => _radius = radius;
 
 		private readonly Distance _radius;
 

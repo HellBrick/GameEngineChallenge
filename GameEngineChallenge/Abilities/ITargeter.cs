@@ -2,7 +2,7 @@
 
 namespace GameEngineChallenge.Abilities
 {
-	public interface IAttackTargeter
+	public interface ITargeter
 	{
 		IEnumerable<Hero> EnumerateTargets( Hero attacker, GameContext context );
 	}
