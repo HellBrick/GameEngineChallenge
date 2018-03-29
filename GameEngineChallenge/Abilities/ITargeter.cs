@@ -4,6 +4,6 @@ namespace GameEngineChallenge.Abilities
 {
 	public interface ITargeter
 	{
-		IEnumerable<Hero> EnumerateTargets( Hero attacker, GameContext context );
+		IEnumerable<Hero> EnumerateTargets( Hero actor, GameContext context );
 	}
 }
