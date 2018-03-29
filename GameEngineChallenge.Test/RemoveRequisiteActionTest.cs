@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using GameEngineChallenge.Actions;
 using GameEngineChallenge.Services;
 using Utils;
@@ -14,7 +15,7 @@ namespace GameEngineChallenge.Test
 			ExistingRequisite existingRequisite = new ExistingRequisite();
 			Hero hero = new Hero( team: default, initialHp: default, existingRequisite );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			new RemoveRequisiteAction( hero, new NonExistingRequisite() ).Execute( context );
 
@@ -28,7 +29,7 @@ namespace GameEngineChallenge.Test
 			ExistingRequisite existingRequisite = new ExistingRequisite();
 			Hero hero = new Hero( team: default, initialHp: default, existingRequisite );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			new RemoveRequisiteAction( hero, existingRequisite ).Execute( context );
 

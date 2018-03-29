@@ -21,7 +21,7 @@ namespace GameEngineChallenge.Test
 
 			Hero dyingHero = new Hero( team: default, new HitPoints( 10 ), DeathOnNoHpAbility.Instance, suicideAbility );
 			HeroService heroService = new HeroService( dyingHero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			TickExecutor tickExecutor = new TickExecutor();
 
@@ -42,7 +42,7 @@ namespace GameEngineChallenge.Test
 
 				DeadAbility.Instance,
 				new InputBasedMovementAbility( new Speed( 5.0 ) ),
-				new AutoAttackAbility( new HitPoints( 5 ), new ClosestOpponentAttackTargeter( new Distance( 9999.0 ) ) ).WithCooldown( TimeSpan.FromSeconds( 5 ) )
+				new AutoAttackAbility( new HitPoints( 5 ), new ClosestOpponentTargeter( new Distance( 9999.0 ) ) ).WithCooldown( TimeSpan.FromSeconds( 5 ) )
 			);
 
 			HitPoints shootingTargetHp = new HitPoints( 9999 );
@@ -61,7 +61,7 @@ namespace GameEngineChallenge.Test
 			InputService inputService = new InputService();
 			inputService.SetDirection( deadHero, new Vector( 1.0, 0.0 ) );
 
-			GameContext context = new GameContext( heroService, inputService, timeService, spaceService );
+			GameContext context = new GameContext( heroService, inputService, timeService, spaceService, new RandomService( new Random() ) );
 			new TickExecutor().ExecuteTick( context );
 
 			spaceService.GetHeroPosition( deadHero ).Should().Be( bodyPosition );

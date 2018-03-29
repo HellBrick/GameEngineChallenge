@@ -25,7 +25,7 @@ namespace GameEngineChallenge.Test
 			SpaceService spaceService = new SpaceService();
 			InputService inputService = new InputService();
 			TimeService timeService = new TimeService();
-			GameContext context = new GameContext( heroService, inputService, timeService, spaceService );
+			GameContext context = new GameContext( heroService, inputService, timeService, spaceService, new RandomService( new Random() ) );
 
 			spaceService.SetHeroPosition( hero, new Position( 0.0, 0.0 ) );
 			inputService.SetDirection( hero, new Vector( inputX, inputY ) );

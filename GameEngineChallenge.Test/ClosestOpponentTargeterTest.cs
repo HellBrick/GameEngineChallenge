@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentAssertions;
 using GameEngineChallenge.Abilities.AttackTargeters;
 using GameEngineChallenge.Services;
@@ -7,14 +8,14 @@ using Xunit;
 
 namespace GameEngineChallenge.Test
 {
-	public class ClosestOpponentAttackTargeterTest
+	public class ClosestOpponentTargeterTest
 	{
 		private static readonly HitPoints _initialHp = new HitPoints( 50 );
 
 		[Fact]
 		public void CanNotTargetFarAwayOpponent()
 		{
-			ClosestOpponentAttackTargeter targeter = new ClosestOpponentAttackTargeter( new Distance( 1.0 ) );
+			ClosestOpponentTargeter targeter = new ClosestOpponentTargeter( new Distance( 1.0 ) );
 
 			Hero attacker = new Hero( new TeamId( 0 ), _initialHp );
 			Hero opponent = new Hero( new TeamId( 1 ), _initialHp );
@@ -25,7 +26,7 @@ namespace GameEngineChallenge.Test
 			spaceService.SetHeroPosition( attacker, new Position( 0.0, 0.0 ) );
 			spaceService.SetHeroPosition( opponent, new Position( 2.0, 0.0 ) );
 
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), spaceService );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), spaceService, new RandomService( new Random() ) );
 			Hero[] targets = targeter.EnumerateTargets( attacker, context ).ToArray();
 
 			targets.Should().BeEmpty();
@@ -34,7 +35,7 @@ namespace GameEngineChallenge.Test
 		[Fact]
 		public void CanNotTargetTeammate()
 		{
-			ClosestOpponentAttackTargeter targeter = new ClosestOpponentAttackTargeter( new Distance( 1.0 ) );
+			ClosestOpponentTargeter targeter = new ClosestOpponentTargeter( new Distance( 1.0 ) );
 
 			Hero attacker = new Hero( new TeamId( 0 ), _initialHp );
 			Hero teammate = new Hero( new TeamId( 0 ), _initialHp );
@@ -45,7 +46,7 @@ namespace GameEngineChallenge.Test
 			spaceService.SetHeroPosition( attacker, new Position( 0.0, 0.0 ) );
 			spaceService.SetHeroPosition( teammate, new Position( 0.5, 0.0 ) );
 
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), spaceService );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), spaceService, new RandomService( new Random() ) );
 			Hero[] targets = targeter.EnumerateTargets( attacker, context ).ToArray();
 
 			targets.Should().BeEmpty();
@@ -54,7 +55,7 @@ namespace GameEngineChallenge.Test
 		[Fact]
 		public void CanNotTargetOpponentWithNoHpLeft()
 		{
-			ClosestOpponentAttackTargeter targeter = new ClosestOpponentAttackTargeter( new Distance( 1.0 ) );
+			ClosestOpponentTargeter targeter = new ClosestOpponentTargeter( new Distance( 1.0 ) );
 
 			Hero attacker = new Hero( new TeamId( 0 ), _initialHp );
 			Hero deadOpponent = new Hero( new TeamId( 1 ), new HitPoints( 0 ) );
@@ -65,7 +66,7 @@ namespace GameEngineChallenge.Test
 			spaceService.SetHeroPosition( attacker, new Position( 0.0, 0.0 ) );
 			spaceService.SetHeroPosition( deadOpponent, new Position( 0.0, 0.5 ) );
 
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), spaceService );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), spaceService, new RandomService( new Random() ) );
 			Hero[] targets = targeter.EnumerateTargets( attacker, context ).ToArray();
 
 			targets.Should().BeEmpty();
@@ -74,7 +75,7 @@ namespace GameEngineChallenge.Test
 		[Fact]
 		public void ChoosesCorrectTarget()
 		{
-			ClosestOpponentAttackTargeter targeter = new ClosestOpponentAttackTargeter( new Distance( 1.0 ) );
+			ClosestOpponentTargeter targeter = new ClosestOpponentTargeter( new Distance( 1.0 ) );
 
 			Hero attacker = new Hero( new TeamId( 0 ), _initialHp );
 			Hero teammate = new Hero( new TeamId( 0 ), _initialHp );
@@ -91,7 +92,7 @@ namespace GameEngineChallenge.Test
 			spaceService.SetHeroPosition( farOpponent, new Position( 0.0, 0.9 ) );
 			spaceService.SetHeroPosition( closeOpponent, new Position( 0.3, 0.4 ) );
 
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), spaceService );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), spaceService, new RandomService( new Random() ) );
 			Hero[] targets = targeter.EnumerateTargets( attacker, context ).ToArray();
 
 			targets.Should().HaveCount( 1 );

@@ -19,7 +19,7 @@ namespace GameEngineChallenge.Test
 			TimerRequisite timer = new TimerRequisite() { TimeLeft = TimeSpan.FromSeconds( initialTimeLeft ) };
 			Hero hero = new Hero( team: default, initialHp: default, timer );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			new DecreaseTimerAction( timer, TimeSpan.FromSeconds( decrement ) ).Execute( context );
 

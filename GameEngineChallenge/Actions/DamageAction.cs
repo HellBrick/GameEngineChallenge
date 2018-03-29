@@ -4,18 +4,18 @@
 	{
 		public DamageAction( Hero target, HitPoints damage )
 		{
-			_target = target;
-			_damage = damage;
+			Target = target;
+			Damage = damage;
 		}
 
-		private readonly Hero _target;
-		private readonly HitPoints _damage;
+		public Hero Target { get; }
+		public HitPoints Damage { get; }
 
 		public void Execute( GameContext context )
 		{
-			_target.HP = new HitPoints( GetNewHpValue() );
+			Target.HP = new HitPoints( GetNewHpValue() );
 
-			uint GetNewHpValue() => _target.HP < _damage ? 0 : _target.HP.Value - _damage.Value;
+			uint GetNewHpValue() => Target.HP < Damage ? 0 : Target.HP.Value - Damage.Value;
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace GameEngineChallenge.Test
 
 			Hero hero = new Hero( team: default, initialHp: default, new IRequisite[] { CreatePhaseAbility( phase1 ), CreatePhaseAbility( phase4 ), CreatePhaseAbility( phase0 ) } );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			TickExecutor executor = new TickExecutor();
 			executor.ExecuteTick( context );
@@ -49,7 +49,7 @@ namespace GameEngineChallenge.Test
 
 			Hero hero = new Hero( team: default, initialHp: default, newAbilityInflicter );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			TickExecutor executor = new TickExecutor();
 			executor.ExecuteTick( context );
@@ -67,7 +67,7 @@ namespace GameEngineChallenge.Test
 
 			Hero hero = new Hero( team: default, initialHp: default, removedAbility, abilityRemover );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			TickExecutor executor = new TickExecutor();
 			executor.ExecuteTick( context );
@@ -81,11 +81,11 @@ namespace GameEngineChallenge.Test
 			bool actionExecuted = false;
 
 			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => actionExecuted = true );
-			IActionInterceptor interceptor = CreateInterceptor( a => Array.Empty<IAction>() );
+			IActionInterceptor interceptor = CreateInterceptor( ( a, c ) => Array.Empty<IAction>() );
 
 			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			TickExecutor executor = new TickExecutor();
 			executor.ExecuteTick( context );
@@ -99,11 +99,11 @@ namespace GameEngineChallenge.Test
 			bool actionExecuted = false;
 
 			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => actionExecuted = true );
-			IActionInterceptor interceptor = CreateInterceptor( a => a.AsArray() );
+			IActionInterceptor interceptor = CreateInterceptor( ( a, c ) => a.AsArray() );
 
 			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			TickExecutor executor = new TickExecutor();
 			executor.ExecuteTick( context );
@@ -118,11 +118,11 @@ namespace GameEngineChallenge.Test
 			bool replacementActionExecuted = false;
 
 			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => originalActionExecuted = true );
-			IActionInterceptor interceptor = CreateInterceptor( a => CreateAction( c => replacementActionExecuted = true ).AsArray() );
+			IActionInterceptor interceptor = CreateInterceptor( ( a, _ ) => CreateAction( c => replacementActionExecuted = true ).AsArray() );
 
 			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			TickExecutor executor = new TickExecutor();
 			executor.ExecuteTick( context );
@@ -142,7 +142,7 @@ namespace GameEngineChallenge.Test
 			IActiveAbility ability = CreateActiveAbility( phase: default, ( h, c ) => originalActionExecuted = true );
 			IActionInterceptor interceptor = CreateInterceptor
 			(
-				a
+				( a, _ )
 				=> Enumerable
 				.Repeat( CreateAction( c => additionalActionsExecuted++ ), additionalActionsToCreate )
 				.Concat( a.AsArray() )
@@ -150,7 +150,7 @@ namespace GameEngineChallenge.Test
 
 			Hero hero = new Hero( team: default, initialHp: default, ability, interceptor );
 			HeroService heroService = new HeroService( hero.AsArray() );
-			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService() );
+			GameContext context = new GameContext( heroService, new InputService(), new TimeService(), new SpaceService(), new RandomService( new Random() ) );
 
 			TickExecutor executor = new TickExecutor();
 			executor.ExecuteTick( context );
