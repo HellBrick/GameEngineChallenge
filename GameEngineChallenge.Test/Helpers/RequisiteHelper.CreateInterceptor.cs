@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Utils;
 
 namespace GameEngineChallenge.Test

@@ -1,9 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using GameEngineChallenge.Abilities;
-using GameEngineChallenge.Actions;
 using GameEngineChallenge.Services;
-using Utils;
 using Xunit;
 
 using static GameEngineChallenge.Test.RequisiteHelper;
