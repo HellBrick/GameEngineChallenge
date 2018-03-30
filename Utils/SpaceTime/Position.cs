@@ -15,6 +15,7 @@ namespace Utils.SpaceTime
 		public double Y { get; }
 
 		public static Position operator +( Position position, Vector vector ) => new Position( position.X + vector.X, position.Y + vector.Y );
+		public static Vector operator -( Position position1, Position position2 ) => new Vector( position1.X - position2.X, position1.Y - position2.Y );
 
 		public override string ToString() => $"[{X} : {Y}]";
 

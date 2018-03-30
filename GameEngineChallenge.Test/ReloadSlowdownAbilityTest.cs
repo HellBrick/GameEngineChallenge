@@ -19,7 +19,7 @@ namespace GameEngineChallenge.Test
 		{
 			CooldownAbility autoAttack = ability.WithCooldown( TimeSpan.FromSeconds( 5.0 ) );
 
-			Hero hero = new Hero( team: default, new HitPoints( 9999 ), autoAttack, new DecreaseAllTimersAbility(), new ReloadSlowdownAbility( 0.5 ) );
+			Hero hero = new Hero( team: default, new HitPoints( 9999 ), autoAttack, DecreaseAllTimersAbility.Instance, new ReloadSlowdownAbility( 0.5 ) );
 			HeroService heroService = new HeroService( hero.AsArray() );
 			TimeService timeService = new TimeService();
 			GameContext context = new GameContext( heroService, new InputService(), timeService, new SpaceService(), new RandomService( new Random() ) );

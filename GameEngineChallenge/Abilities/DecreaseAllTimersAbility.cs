@@ -6,6 +6,8 @@ namespace GameEngineChallenge.Abilities
 {
 	public class DecreaseAllTimersAbility : IActiveAbility
 	{
+		public static DecreaseAllTimersAbility Instance { get; } = new DecreaseAllTimersAbility();
+
 		public TickPhase Phase => CommonTickPhases.TimeAdjustments;
 		public RequisiteId Id => new RequisiteId( nameof( DecreaseAllTimersAbility ) );
 
