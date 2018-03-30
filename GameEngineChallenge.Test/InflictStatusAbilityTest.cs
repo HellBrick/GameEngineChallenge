@@ -6,7 +6,7 @@ using GameEngineChallenge.Services;
 using Utils;
 using Xunit;
 
-using static GameEngineChallenge.Test.AbilityBuilder;
+using static GameEngineChallenge.Test.RequisiteHelper;
 
 namespace GameEngineChallenge.Test
 {
