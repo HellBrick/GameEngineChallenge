@@ -5,7 +5,7 @@ using Utils;
 
 namespace GameEngineChallenge.Test
 {
-	public static partial class AbilityBuilder
+	public static partial class RequisiteHelper
 	{
 		public static ITargeter CreateTargeter( Func<Hero, GameContext, Hero> targetSelector )
 			=> new LambdaTargeter( ( h, c ) => targetSelector( h, c ).AsArray() );

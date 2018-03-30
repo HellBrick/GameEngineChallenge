@@ -3,7 +3,7 @@ using GameEngineChallenge.Abilities;
 using GameEngineChallenge.Services;
 using Xunit;
 
-using static GameEngineChallenge.Test.AbilityBuilder;
+using static GameEngineChallenge.Test.RequisiteHelper;
 
 namespace GameEngineChallenge.Test
 {

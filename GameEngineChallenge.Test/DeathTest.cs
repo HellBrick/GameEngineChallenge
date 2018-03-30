@@ -8,7 +8,7 @@ using Utils;
 using Utils.SpaceTime;
 using Xunit;
 
-using static GameEngineChallenge.Test.AbilityBuilder;
+using static GameEngineChallenge.Test.RequisiteHelper;
 
 namespace GameEngineChallenge.Test
 {

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Utils;
 
 namespace GameEngineChallenge.Test
 {
-	public static partial class AbilityBuilder
+	public static partial class RequisiteHelper
 	{
 		public static IActionInterceptor CreateInterceptor( Func<IAction, GameContext, OneOrMany<IAction>> interceptor )
 			=> new LambdaInterceptor( interceptor );

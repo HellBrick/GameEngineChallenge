@@ -13,7 +13,7 @@ namespace GameEngineChallenge.Test
 		public void CooldownIsEnabledAfterFirstInvocation()
 		{
 			CooldownAbility cooldownAbility
-				= AbilityBuilder
+				= RequisiteHelper
 				.CreateActiveAbility( phase: default, ( h, c ) => { } )
 				.WithCooldown( _cooldown );
 
@@ -25,7 +25,7 @@ namespace GameEngineChallenge.Test
 		public void CooldownIsNotEnabledIfAbilityDoesNotEmitAnyActions()
 		{
 			CooldownAbility cooldownAbility
-				= AbilityBuilder
+				= RequisiteHelper
 				.CreateActiveAbility( phase: default, ( h, c ) => Array.Empty<IAction>() )
 				.WithCooldown( _cooldown );
 
@@ -37,7 +37,7 @@ namespace GameEngineChallenge.Test
 		public void NoActionsAreEmittedIfCooldownIsEnabled()
 		{
 			CooldownAbility cooldownAbility
-				= AbilityBuilder
+				= RequisiteHelper
 				.CreateActiveAbility( phase: default, ( h, c ) => { } )
 				.WithCooldown( _cooldown );
 

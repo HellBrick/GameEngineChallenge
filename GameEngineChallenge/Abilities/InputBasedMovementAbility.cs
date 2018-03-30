@@ -8,9 +8,9 @@ namespace GameEngineChallenge.Abilities
 {
 	public class InputBasedMovementAbility : IActiveAbility
 	{
-		private readonly Speed _speed;
-
 		public InputBasedMovementAbility( Speed speed ) => _speed = speed;
+
+		private readonly Speed _speed;
 
 		public RequisiteId Id => new RequisiteId( nameof( InputBasedMovementAbility ) );
 		public TickPhase Phase => CommonTickPhases.TimeAdjustments;

@@ -4,7 +4,7 @@ using Utils;
 
 namespace GameEngineChallenge.Test
 {
-	public static partial class AbilityBuilder
+	public static partial class RequisiteHelper
 	{
 		public static IActiveAbility CreateActiveAbility( TickPhase phase, Action<Hero, GameContext> actionLambda )
 			=> CreateActiveAbility

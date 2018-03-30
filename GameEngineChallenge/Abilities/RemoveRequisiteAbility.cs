@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using GameEngineChallenge.Actions;
-using Utils;
 
 namespace GameEngineChallenge.Abilities
 {
 	public class RemoveRequisiteAbility : IActiveAbility
 	{
-		private readonly IRequisite _requisiteToRemove;
-
 		public RemoveRequisiteAbility( IRequisite requisiteToRemove, TickPhase phase )
 		{
 			_requisiteToRemove = requisiteToRemove;
@@ -15,6 +12,7 @@ namespace GameEngineChallenge.Abilities
 			Id = new RequisiteId( "Remove" + requisiteToRemove.Id );
 		}
 
+		private readonly IRequisite _requisiteToRemove;
 		public TickPhase Phase { get; }
 		public RequisiteId Id { get; }
 

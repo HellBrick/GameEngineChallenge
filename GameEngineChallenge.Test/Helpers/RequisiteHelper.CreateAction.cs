@@ -2,7 +2,7 @@
 
 namespace GameEngineChallenge.Test
 {
-	public static partial class AbilityBuilder
+	public static partial class RequisiteHelper
 	{
 		public static IAction CreateAction( Action<GameContext> actionLambda )
 			=> new LambdaAction( default, ( _, c ) => actionLambda( c ) );
